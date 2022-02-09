@@ -1,4 +1,4 @@
-# Jackson Daniels  Individual Project
+# Band Buds Reviews
 
 
 ### Problem Statement
