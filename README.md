@@ -10,6 +10,25 @@ trusted group of friends would create accounts, and you would be able to see wha
 of those games. This is all in hope that if you want to try out a new game you could go to this site
 and look at what your friends have played and then decide what you want to play. 
 
+### User Stories
+
+###User: Jacob
+Age: 18
+
+• To be able to find a new game to play based on some people they know
+
+• Create an account to post/edit some reviews about some games he has played recently
+
+• Maybe see what other people have been playing recently
+
+
+###User: Kristen
+Age: 21
+
+• Create a group page to allow their friends to create their own like site of game reviews
+
+• To post/edit some reviews about some games she has played recently
+
 ### Project Technologies/Techniques
 * IDE: IntelliJ IDEA
 
