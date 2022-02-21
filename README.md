@@ -1,6 +1,5 @@
-# Jackson Daniels  Individual Project
+# Band Buds Reviews
 
-This repository will serve as the complete code for my Individual Project for Enterprise Java
 
 ### Problem Statement
 
