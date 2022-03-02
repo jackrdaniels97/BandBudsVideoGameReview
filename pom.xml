@@ -91,13 +91,6 @@
       <version>5.4.4.Final</version>
     </dependency>
 
-    <!-- Added to try and fix the com.mysql.cj.jdbc.Driver error -->
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.39</version>
-    </dependency>
-
   </dependencies>
 
   <build>
