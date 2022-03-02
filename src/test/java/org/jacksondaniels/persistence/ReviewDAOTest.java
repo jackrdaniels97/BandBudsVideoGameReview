@@ -1,79 +1,83 @@
 package org.jacksondaniels.persistence;
 
-
 import org.jacksondaniels.testUtil.Database;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.jacksondaniels.entity.Review;
+import org.jacksondaniels.entity.User;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
+
 
 class ReviewDAOTest {
+    GenericDao<Review> reviewDao;
+    GenericDao<User> userDao;
 
-    ReviewDao dao;
+    private final Logger logger = LogManager.getLogger(this.getClass());
 
-    /**
-     * Set up the two tables with fresh data
-     */
     @BeforeEach
     void setUp() {
-
         logger.info("Starting new post test");
+        reviewDao = new GenericDao<>(Review.class);
+        userDao = new GenericDao<>(User.class);
 
         Database database = Database.getInstance();
         database.runSQL("cleandb.sql");
     }
 
-    /**
-     * Verifies insert test is working
-     */
     @Test
     public void insertTest() {
+        User user1 = userDao.getById(1);
+        Review testReview = new Review("Test title", "post content here");
+        testReview.setUser(user1);
 
-
+        assertEquals(5, reviewDao.getAll().size());
     }
 
-    /**
-     * Verifies getting all posts
-     */
     @Test
     public void getAllPostsSuccess() {
-
+        logger.info("in getAllPostsSuccess");
+        List<Review> posts = reviewDao.getAll();
+        assertEquals(5, posts.size());
     }
 
-    /**
-     * Verifies getting single post
-     */
     @Test
     public void getPostByIdSuccess() {
-        Review retrievedReview = dao.getById(3);
-        asser
+        logger.info("in getPostByIdSuccess");
+        Review testPost = reviewDao.getById(1);
+        assertEquals("The Witcher 3", testPost.getTitle());
+        assertEquals("One of the best games to ever get. Some of the best game play and story that has ever graced us. ", testPost.getReview());
     }
 
-    /**
-     * Get post by specific user
-     */
     @Test
     public void getPostsByUserIdSuccess() {
+        logger.info("in getPostsByUserIdSuccess");
+        User user4 = userDao.getById(4);
 
+        List<Review> userReview = reviewDao.getByUser(user4);
+        assertEquals(1, userReview.size());
     }
 
-    /**
-     * Update post in database
-     */
     @Test
     public void updatePostSuccess() {
+        Review testReview = reviewDao.getById(1);
+        testReview.setTitle("new title");
+        reviewDao.saveOrUpdate(testReview);
 
+        Review editedReview = reviewDao.getById(1);
+        assertEquals("new title1", editedReview.getTitle());
     }
 
-    /**
-     * Verifies being able to delete post
-     */
     @Test
     public void deletePostSuccess() {
+        logger.info("in deletePostSuccess");
+        Review testReview = reviewDao.getById(1);
+        reviewDao.delete(testReview);
 
+        assertEquals(5, reviewDao.getAll().size());
     }
-
 }
