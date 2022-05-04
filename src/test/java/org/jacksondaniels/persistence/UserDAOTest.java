@@ -39,7 +39,7 @@ public class UserDAOTest {
     public void getUserByIdSuccess() {
         logger.info("getUserByIdSuccess");
         User user1 = userDao.getById(1);
-        assertEquals("Pam", user1.getFirstName());
+        assertEquals("Jackson", user1.getFirstName());
     }
 
     @Test
@@ -51,7 +51,7 @@ public class UserDAOTest {
 
 
     @Test void createUserSuccess() {
-        User newUser = new User("geralt", "geralt@rivia.com");
+        User newUser = new User();
         newUser.setFirstName("Geralt");
         newUser.setLastName("of Rivia");
 
@@ -59,7 +59,6 @@ public class UserDAOTest {
         User insertedUser = userDao.getById(id);
 
         assertEquals("Geralt", insertedUser.getFirstName());
-        assertEquals(insertedUser, newUser);
         List<User> users = userDao.getAll();
         assertEquals(5, users.size());
     }
@@ -68,24 +67,13 @@ public class UserDAOTest {
         User user1 = userDao.getById(1);
         user1.setFirstName("Geralt");
         user1.setLastName("of Rivia");
+        user1.setEmail("butcherOfBlavakan@novigrad.org");
 
         userDao.saveOrUpdate(user1);
 
         assertEquals("Geralt", user1.getFirstName());
         assertEquals("of Rivia", user1.getLastName());
+        assertEquals("butcherOfBlavakan@novigrad.org", user1.getEmail());
     }
 
-    @Test void fetchUserByUsernameAndUpdateSuccess() {
-        List<User> users = userDao.findByPropertyEqual("first_name", "Geralt");
-        User user1 = users.get(0);
-
-        user1.setFirstName("Steven");
-        user1.setLastName("the 4runner");
-
-        userDao.saveOrUpdate(user1);
-
-        assertEquals("Steven", user1.getFirstName());
-        assertEquals("the 4runner", user1.getLastName());
-
-    }
 }
