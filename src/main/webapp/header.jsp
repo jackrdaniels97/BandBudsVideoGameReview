@@ -10,7 +10,7 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-link active" aria-current="page" href="index.jsp">Home</a>
-                    <a class="nav-link" href="viewGames.jsp">View Reviews</a>
+                    <a class="nav-link" href="<%=request.getContextPath()%>/viewGames">View Reviews</a>
                     <a class="nav-link" href="addGame.jsp">Add Review</a>
 
                 </div>
