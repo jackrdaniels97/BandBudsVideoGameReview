@@ -3,8 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <jsp:include page="head.jsp" />
+<title>Band Buds Video Game Reviews</title>
 
-<body class="container">
+<body class="container-fluid">
 
     <jsp:include page="header.jsp" />
 

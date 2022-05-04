@@ -13,6 +13,11 @@ import javax.persistence.Table;
 @Table(name = "user")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
+    private int id;
+
     @Column(name = "first_name")
     private String firstName;
 
@@ -21,11 +26,6 @@ public class User {
 
     @Column(name = "email")
     private String email;
-
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO, generator="native")
-    @GenericGenerator(name = "native", strategy = "native")
-    private int id;
 
     /**
      * Instantiates a new User

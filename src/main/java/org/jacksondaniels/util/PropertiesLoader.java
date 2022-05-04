@@ -1,7 +1,4 @@
-package org.jacksondaniels.testUtil;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+package org.jacksondaniels.util;
 
 import java.util.Properties;
 
@@ -11,7 +8,7 @@ import java.util.Properties;
  * @author Eric Knapp
  *
  */
-public interface PropertiesLoaderUtil {
+public interface PropertiesLoader {
     /**
      * This default method will load a properties file into a Properties instance
      * and return it.
