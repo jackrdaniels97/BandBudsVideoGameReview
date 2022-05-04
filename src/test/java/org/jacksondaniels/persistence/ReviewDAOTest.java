@@ -7,6 +7,9 @@ import org.jacksondaniels.entity.User;
 import org.jacksondaniels.testUtil.Database;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -36,7 +39,12 @@ class ReviewDAOTest {
      */
     @Test
     public void insertTest() {
+        logger.info("insertTest");
+        User userTest = userDao.getById(1);
+        Review reviewTest = new Review("Testing", "Testing 123");
+        reviewTest.setUser(userTest);
 
+        assertEquals(6, reviewDao.getAll().size());
 
     }
 
@@ -45,7 +53,9 @@ class ReviewDAOTest {
      */
     @Test
     public void getAllReviewsSuccess() {
-
+        logger.info("getAllReviews");
+        List<Review> reviews = reviewDao.getAll();
+        assertEquals(6, reviews.size());
     }
 
     /**
@@ -54,7 +64,7 @@ class ReviewDAOTest {
     @Test
     public void getReviewByIdSuccess() {
         logger.info("in getReviewByIdSuccess");
-        Review testReview = reviewDao.getById(3);
+        Review testReview = reviewDao.getById(6);
         assertEquals("Lord of the Rings Conquest", testReview.getTitle());
         assertEquals("It was cool being able to play as myself but I should have been stronger", testReview.getReview());
         assertEquals(3, testReview.getUser());
@@ -65,7 +75,11 @@ class ReviewDAOTest {
      */
     @Test
     public void getReviewsByUserIdSuccess() {
+        logger.info("getReviewsbyUserIdSuccess");
+        User testUser = userDao.getById(2);
 
+        List<Review> userReviews = reviewDao.getByUser(testUser);
+        assertEquals(1, userReviews.size());
     }
 
     /**
@@ -73,7 +87,13 @@ class ReviewDAOTest {
      */
     @Test
     public void updateReviewSuccess() {
+        logger.info("updateReviewSuccess");
+        Review testReview = reviewDao.getById(1);
+        testReview.setTitle("The Witcher 2");
+        reviewDao.saveOrUpdate(testReview);
 
+        Review updatedReview = reviewDao.getById(1);
+        assertEquals("The Witcher 2", updatedReview.getTitle());
     }
 
     /**
@@ -81,7 +101,11 @@ class ReviewDAOTest {
      */
     @Test
     public void deleteReviewSuccess() {
+        logger.info("deleteReviewSuccess");
+        Review testReview = reviewDao.getById(1);
+        reviewDao.delete(testReview);
 
+        assertEquals(5, reviewDao.getAll().size());
     }
 
 }
