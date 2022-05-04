@@ -23,7 +23,7 @@ public class Review {
     private String review;
 
     @ManyToOne
-    @JoinColumn(name = "reviewer_id", foreignKey = @ForeignKey(name = "fk_reviews_id"))
+    @JoinColumn(name = "reviewerId", foreignKey = @ForeignKey(name = "fk_reviews_id"))
     private User user;
 
     /**

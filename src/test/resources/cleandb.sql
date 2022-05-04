@@ -26,10 +26,10 @@ CREATE TABLE `reviews` (
                            `id_reviews` int NOT NULL AUTO_INCREMENT,
                            `title` varchar(45) NOT NULL,
                            `review` varchar(225) NOT NULL,
-                           `reviewer_id` int NOT NULL,
+                           `reviewerId` int NOT NULL,
                            PRIMARY KEY (`id_reviews`),
-                           KEY `fk_reviews_id_idx` (`reviewer_id`),
-                           CONSTRAINT `fk_reviews_id` FOREIGN KEY (`reviewer_id`) REFERENCES `user` (`id`)
+                           KEY `fk_reviews_id_idx` (`reviewerId`),
+                           CONSTRAINT `fk_reviews_id` FOREIGN KEY (`reviewerId`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
