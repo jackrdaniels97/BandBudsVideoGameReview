@@ -81,7 +81,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         String userName = null;
 
         if (authCode == null) {
-            //TODO forward to an error page or back to the login
+            req.getRequestDispatcher("/login").forward(req,resp);
         } else {
             HttpRequest authRequest = buildAuthRequest(authCode);
             try {
@@ -90,10 +90,10 @@ public class Auth extends HttpServlet implements PropertiesLoader {
                 req.setAttribute("userName", userName);
             } catch (IOException e) {
                 logger.error("Error getting or validating the token: " + e.getMessage(), e);
-                //TODO forward to an error page
+                req.getRequestDispatcher("/generror").forward(req, resp);
             } catch (InterruptedException e) {
                 logger.error("Error getting token from Cognito oauth url " + e.getMessage(), e);
-                //TODO forward to an error page
+                req.getRequestDispatcher("/generror").forward(req, resp);
             }
         }
         RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
