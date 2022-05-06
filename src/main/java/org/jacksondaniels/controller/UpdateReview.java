@@ -32,9 +32,8 @@ public class UpdateReview extends HttpServlet {
         int reviewId = Util.getId(req.getPathInfo());
         GenericDao<Review> reviewDao = new GenericDao<>(Review.class);
 
-        Review reviewToUpdate = reviewDao.getById(reviewId); // fetch post with id
+        Review reviewToUpdate = reviewDao.getById(reviewId);
 
-        // get updated form fields from
         reviewToUpdate.setTitle(req.getParameter("title"));
         reviewToUpdate.setReview(req.getParameter("review"));
 

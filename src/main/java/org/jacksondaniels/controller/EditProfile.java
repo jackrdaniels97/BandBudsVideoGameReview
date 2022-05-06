@@ -41,5 +41,4 @@ public class EditProfile extends HttpServlet {
         RequestDispatcher dispatcher = req.getRequestDispatcher("/profile.jsp");
         dispatcher.forward(req, resp);
     }
-
 }
