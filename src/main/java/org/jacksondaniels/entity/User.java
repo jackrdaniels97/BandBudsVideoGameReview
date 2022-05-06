@@ -27,6 +27,10 @@ public class User {
     @Column(name = "email")
     private String email;
 
+
+    @Column(name = "username")
+    private String username;
+
     /**
      * Instantiates a new User
      */
@@ -40,13 +44,19 @@ public class User {
      * @param lastName  user last name
      * @param email     user email
      * @param id        user id
+     * @param username  the username
      */
-    public User(String firstName, String lastName, String email, int id) {
+    public User(String firstName, String lastName, String email, int id, String username) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.id = id;
+        this.username = username;
 
+    }
+
+    public User(String username) {
+        this.username = username;
     }
 
 
@@ -122,13 +132,32 @@ public class User {
         this.id = id;
     }
 
+    /**
+     * Gets username.
+     *
+     * @return the username
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * Sets username.
+     *
+     * @param username the username
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", id=" + id +
+                ", id=" + id + '\'' +
+                ", username=" + username +
                 '}';
     }
 }

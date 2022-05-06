@@ -15,7 +15,7 @@ import java.util.List;
 /**
  *  Contains method for displaying all blog posts
  */
-@WebServlet(name = "ViewGames", urlPatterns = { "/viewsGames" })
+@WebServlet(name = "ViewGames", urlPatterns = { "/viewGames" })
 public class ViewGames extends HttpServlet {
     /**
      * Called by server to allow servlet to handle a GET request

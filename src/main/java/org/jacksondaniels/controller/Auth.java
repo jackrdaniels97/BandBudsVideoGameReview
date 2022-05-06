@@ -9,13 +9,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.commons.io.*;
-import org.jacksondaniels.auth.CognitoJWTParser;
-import org.jacksondaniels.auth.CognitoTokenHeader;
-import org.jacksondaniels.auth.Keys;
-import org.jacksondaniels.auth.TokenResponse;
+import org.jacksondaniels.auth.*;
+import org.jacksondaniels.entity.User;
+import org.jacksondaniels.persistence.GenericDao;
 import org.jacksondaniels.util.PropertiesLoader;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,12 +36,13 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.*;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpSession;
+import java.util.Base64;
 
 
 @WebServlet(
         urlPatterns = {"/auth"}
 )
-// TODO if something goes wrong it this process, route to an error page. Currently, errors are only caught and logged.
 /**
  * Inspired by: https://stackoverflow.com/questions/52144721/how-to-get-access-token-using-client-credentials-using-java-code
  */
@@ -58,6 +57,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     String REGION;
     String POOL_ID;
     Keys jwks;
+    GenericDao<User> dao = new GenericDao<>(User.class);
 
     private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -78,27 +78,51 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authCode = req.getParameter("code");
-        String userName = null;
+        HttpSession session = req.getSession();
+
 
         if (authCode == null) {
-            req.getRequestDispatcher("/login").forward(req,resp);
+            resp.sendRedirect("/error.jsp");
         } else {
             HttpRequest authRequest = buildAuthRequest(authCode);
             try {
                 TokenResponse tokenResponse = getToken(authRequest);
-                userName = validate(tokenResponse);
-                req.setAttribute("userName", userName);
+                String username = validate(tokenResponse);
+
+                session.setAttribute("username", username);
+
+                if (userExists(username)) {
+                    logger.info("User " + username + "exists");
+                    User user = getUser(username);
+                    session.setAttribute("user", user);
+                    req.getRequestDispatcher("index.jsp").forward(req, resp);
+                } else {
+                    logger.info("User " + username + "doesn't exist");
+                    User newUser = new User(username);
+                    dao.insert(newUser);
+                    session.setAttribute("user", newUser);
+                    req.getRequestDispatcher("/editProfile").forward(req, resp);
+                }
+
             } catch (IOException e) {
                 logger.error("Error getting or validating the token: " + e.getMessage(), e);
-                req.getRequestDispatcher("/generror").forward(req, resp);
+                resp.sendRedirect("error.jsp");
             } catch (InterruptedException e) {
                 logger.error("Error getting token from Cognito oauth url " + e.getMessage(), e);
-                req.getRequestDispatcher("/generror").forward(req, resp);
+                resp.sendRedirect("error.jsp");
             }
         }
-        RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-        dispatcher.forward(req, resp);
+        req.getRequestDispatcher("index.jsp").forward(req, resp);
+    }
 
+    public boolean userExists(String username) {
+        List<User> users = dao.findByPropertyEqual("username", username);
+        return (users.size() == 1);
+    }
+
+    public User getUser(String username) {
+        List<User> users = dao.findByPropertyEqual("username", username);
+        return users.get(0);
     }
 
     /**
@@ -136,6 +160,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     private String validate(TokenResponse tokenResponse) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         CognitoTokenHeader tokenHeader = mapper.readValue(CognitoJWTParser.getHeader(tokenResponse.getIdToken()).toString(), CognitoTokenHeader.class);
+        //CognitoIdToken idToken = mapper.readValue(CognitoJWTParser.getPayload(tokenResponse.getIdToken()).toString(), CognitoIdToken.class);
 
         // Header should have kid and alg- https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-the-id-token.html
         String keyId = tokenHeader.getKid();
@@ -170,15 +195,16 @@ public class Auth extends HttpServlet implements PropertiesLoader {
 
         // Verify the token
         DecodedJWT jwt = verifier.verify(tokenResponse.getIdToken());
-        String userName = jwt.getClaim("cognito:username").asString();
-        logger.debug("here's the username: " + userName);
+        String username = jwt.getClaim("cognito:username").asString();
+        //String email = jwt.getClaim("email").asString();
+        logger.debug("here's the username: " + username);
+        //logger.debug("the email" + email);
 
-        logger.debug("here are all the available claims: " + jwt.getClaims());
+        //List<String> userData = new ArrayList<>();
+        //userData.add(username);
+        //userData.add(email);
 
-        // TODO decide what you want to do with the info!
-        // for now, I'm just returning username for display back to the browser
-
-        return userName;
+        return username;
     }
 
     /** Create the auth url and use it to build the request.
