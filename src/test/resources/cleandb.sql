@@ -55,6 +55,7 @@ CREATE TABLE `user` (
                         `first_name` varchar(45) DEFAULT NULL,
                         `last_name` varchar(45) DEFAULT NULL,
                         `email` varchar(55) DEFAULT NULL,
+                        `username` varchar(255) DEFAULT NULL,
                         PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -65,7 +66,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Jackson','Daniels','jackrdaniels97@gmail.com'),(2,'John','Wick','babayaga@assassins.org'),(3,'Gandalf','the White','istari@secretfire.org'),(4,'Dr. Alan','Grant','grantsadigger@dinos.net');
+INSERT INTO `user` VALUES (1,'Jackson','Daniels','jackrdaniels97@gmail.com', 'jackd'),(2,'John','Wick','babayaga@assassins.org', 'babayaga'),(3,'Gandalf','the White','istari@secretfire.org', 'gandalf'),(4,'Dr. Alan','Grant','grantsadigger@dinos.net', 'drGrant');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

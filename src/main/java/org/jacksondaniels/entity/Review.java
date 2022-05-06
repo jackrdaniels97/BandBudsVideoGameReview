@@ -32,8 +32,6 @@ public class Review {
     public Review() {
     }
 
-
-
     /**
      * Instantiates a new Review.
      *
