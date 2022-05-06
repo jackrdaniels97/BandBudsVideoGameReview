@@ -1,6 +1,6 @@
 package org.jacksondaniels.controller;
 
-import org.jacksondaniels.util.PropertiesLoader;\
+import org.jacksondaniels.util.PropertiesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
