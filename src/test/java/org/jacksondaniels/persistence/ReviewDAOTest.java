@@ -44,7 +44,7 @@ public class ReviewDAOTest {
         Review reviewTest = new Review("Testing", "Testing 123");
         reviewTest.setUser(userTest);
 
-        assertEquals(6, reviewDao.getAll().size());
+        assertEquals(5, reviewDao.getAll().size());
 
     }
 
@@ -55,7 +55,7 @@ public class ReviewDAOTest {
     public void getAllReviewsSuccess() {
         logger.info("getAllReviews");
         List<Review> reviews = reviewDao.getAll();
-        assertEquals(6, reviews.size());
+        assertEquals(5, reviews.size());
     }
 
     /**
@@ -64,10 +64,9 @@ public class ReviewDAOTest {
     @Test
     public void getReviewByIdSuccess() {
         logger.info("in getReviewByIdSuccess");
-        Review testReview = reviewDao.getById(6);
+        Review testReview = reviewDao.getById(3);
         assertEquals("Lord of the Rings Conquest", testReview.getTitle());
         assertEquals("It was cool being able to play as myself but I should have been stronger", testReview.getReview());
-        assertEquals(3, testReview.getUser());
     }
 
     /**
@@ -105,7 +104,7 @@ public class ReviewDAOTest {
         Review testReview = reviewDao.getById(1);
         reviewDao.delete(testReview);
 
-        assertEquals(5, reviewDao.getAll().size());
+        assertEquals(4, reviewDao.getAll().size());
     }
 
 }
