@@ -23,13 +23,14 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Review: ${review.review}</td>
+                    <td>Review: <c:out value="${review.review}"/></td>
                 </tr>
                 <tr>
-                    <td>Reviewer: ${review.reviewer_id}</td>
+                    <td>Reviewer: <c:out value="${review.reviewer_id}"/></td>
                 </tr>
             </tbody>
         </table>
+        <br /><br />
     </c:forEach>
     <div id="clear"></div>
 </div>
