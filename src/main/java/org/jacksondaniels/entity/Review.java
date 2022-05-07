@@ -2,7 +2,6 @@ package org.jacksondaniels.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
-import java.util.*;
 
 /**
  * The type Review.
@@ -14,7 +13,7 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private int id;
+    private int id_reviews;
 
     @Column(name = "title")
     private String title;
@@ -61,8 +60,8 @@ public class Review {
      *
      * @return the id
      */
-    public int getId() {
-        return id;
+    public int getId_reviews() {
+        return id_reviews;
     }
 
     /**
@@ -70,8 +69,8 @@ public class Review {
      *
      * @param id the id
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setId_reviews(int id) {
+        this.id_reviews = id;
     }
 
     /**
@@ -131,7 +130,7 @@ public class Review {
     @Override
     public String toString() {
         return "Review{" +
-                "id=" + id +
+                "id=" + id_reviews +
                 ", title='" + title + '\'' +
                 ", review='" + review + '\'' +
                 ", user=" + user +

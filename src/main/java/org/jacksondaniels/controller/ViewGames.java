@@ -27,7 +27,7 @@ public class ViewGames extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String url = "/viewsGames.jsp";
+        String url = "/viewGames.jsp";
         GenericDao<Review> reviewDao = new GenericDao<>(Review.class);
 
         // get all posts, reverse the list so newest are displayed first
