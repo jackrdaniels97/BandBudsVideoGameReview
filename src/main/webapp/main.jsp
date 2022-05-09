@@ -14,6 +14,6 @@
     <br />
     <br />
 
-    <img src="images/gamer.png" alt="One Does not Simply" class="center">
+    <img src="images/gamer.png" alt="One Does not Simply" class="center img-fluid">
 
 </main>
