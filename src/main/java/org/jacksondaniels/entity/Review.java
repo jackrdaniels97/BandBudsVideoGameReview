@@ -67,10 +67,10 @@ public class Review {
     /**
      * Sets id.
      *
-     * @param id the id
+     * @param id_reviews the id
      */
-    public void setId_reviews(int id) {
-        this.id_reviews = id;
+    public void setId_reviews(int id_reviews) {
+        this.id_reviews = id_reviews;
     }
 
     /**
@@ -130,7 +130,7 @@ public class Review {
     @Override
     public String toString() {
         return "Review{" +
-                "id=" + id_reviews +
+                "id_reviews=" + id_reviews +
                 ", title='" + title + '\'' +
                 ", review='" + review + '\'' +
                 ", user=" + user +

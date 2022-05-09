@@ -18,7 +18,7 @@
             Update Review
         </h1>
         <br />
-        <form method="POST" action="<%=request.getContextPath()%>/update_review/${review.id}">
+        <form method="POST" action="<%=request.getContextPath()%>/update_review/${review.id_reviews}">
             <div class="form-group">
                 <label for="title">Title of Game:</label>
                 <input type="text" class="form-control" id="title" value="${review.title}">
@@ -28,7 +28,7 @@
                 <input type="text" class="form-control" id="review" value="${review.review}">
             </div>
             <button type="submit" class="btn btn-primary">Save update</button>
-            <a href="/reviews/${review.id}" class="btn btn-danger">Cancel update</a>
+            <a href="/reviews/${review.id_reviews}" class="btn btn-danger">Cancel update</a>
         </form>
         <br />
         <br />

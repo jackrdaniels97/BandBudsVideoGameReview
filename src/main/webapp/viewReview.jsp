@@ -26,7 +26,7 @@
                 <td>Review: ${review.review}</td>
             </tr>
             <tr>
-                <td>Reviewer: ${review.reviewer_id}</td>
+                <td>Reviewer: ${review.reviewerId}</td>
             </tr>
             </tbody>
 
