@@ -32,18 +32,12 @@ public class ViewGames extends HttpServlet {
         String url = "/viewGames.jsp";
         GenericDao<Review> reviewDao = new GenericDao<>(Review.class);
 
-//        List<Review> reviews = reviewDao.getAll();
-//        for (Review review : reviews) {
-//            log(review.toString());
-//        }
+        List<Review> reviews = reviewDao.getAll();
+        for (Review review : reviews) {
+            log(review.toString());
+        }
 
-        List<Review> reviews = new ArrayList<>();
-        User user1 = new User("test", "test", "test", 9, "test");
-        Review review = new Review("Test", "Test", user1);
-        Review review2 = new Review("Test2", "Test2", user1);
 
-        reviews.add(review);
-        reviews.add(review2);
 
         req.setAttribute("reviews", reviews);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
