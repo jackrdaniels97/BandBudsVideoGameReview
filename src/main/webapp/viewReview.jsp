@@ -26,27 +26,34 @@
                 <td>Review: ${review.review}</td>
             </tr>
             <tr>
-                <td>Reviewer: ${review.reviewerId}</td>
+                <td>Reviewer: ${review.user.firstName} ${review.user.lastName}</td>
             </tr>
             </tbody>
 
-            <c:if test="${reviewerId == 1}">
+            <c:if test="${review.user.id == 1}">
                 <tfoot>
-                    <a href="<%=request.getContextPath()%>/display_update_post/${review.id_reviews}" class="btn btn-secondary">Edit Review</a>
-                    <a type="button"
-                       class="btn btn-danger"
-                       href="<%=request.getContextPath()%>/delete_review/${review.id_reviews}"
-                       onclick="return confirm('Are you sure you want to delete this item? This CANNOT be undone.');">Delete</a>
+                    <tr>
+                        <td>
+                            <a href="<%=request.getContextPath()%>/editReview/${review.id_reviews}" class="btn btn-secondary">Edit Review</a>
+                        </td>
+                        <td>
+                            <a type="button"
+                                class="btn btn-danger"
+                                href="<%=request.getContextPath()%>/delete_review/${review.id_reviews}"
+                                onclick="return confirm('Are you sure you want to delete this item? This CANNOT be undone.');">Delete</a>
+                        </td>
+                    </tr>
                 </tfoot>
             </c:if>
         </table>
 
-        <img src="images/gamer.png" alt="One Does not Simply" class="center">
+
 
     </main>
 
     <div id="clear"></div>
 </div>
+<img src="images/gamer.png" alt="One Does not Simply" class="center img-fluid" />
 <div id="main_content_bottom"></div>
 
 <jsp:include page="footer.jsp" />

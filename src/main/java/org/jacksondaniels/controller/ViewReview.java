@@ -33,15 +33,11 @@ public class ViewReview extends HttpServlet {
         GenericDao<Review> reviewDao = new GenericDao<>(Review.class);
 
         String pathInfo = req.getPathInfo();
-        int reviewId = Integer.parseInt(pathInfo.substring(1));
-        Review review = reviewDao.getById(reviewId);
+        int id_reviews = Integer.parseInt(pathInfo.substring(1));
+        Review reviews = reviewDao.getById(id_reviews);
 
-        User user = (User) req.getSession().getAttribute("user");
-
-        req.setAttribute("user", user);
-        req.setAttribute("userId", user.getId());
-        req.setAttribute("review", review);
-        String url = "viewReview.jsp";
+        req.setAttribute("review", reviews);
+        String url = "/viewReview.jsp";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(req, resp);
     }
