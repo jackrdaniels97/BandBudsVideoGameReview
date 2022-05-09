@@ -32,10 +32,10 @@
 
             <c:if test="${reviewerId == 1}">
                 <tfoot>
-                    <a href="<%=request.getContextPath()%>/display_update_post/${review.id}" class="btn btn-secondary">Edit Review</a>
+                    <a href="<%=request.getContextPath()%>/display_update_post/${review.id_reviews}" class="btn btn-secondary">Edit Review</a>
                     <a type="button"
                        class="btn btn-danger"
-                       href="<%=request.getContextPath()%>/delete_review/${review.id}"
+                       href="<%=request.getContextPath()%>/delete_review/${review.id_reviews}"
                        onclick="return confirm('Are you sure you want to delete this item? This CANNOT be undone.');">Delete</a>
                 </tfoot>
             </c:if>

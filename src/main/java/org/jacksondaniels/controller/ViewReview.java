@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- *  Displays the post with id = * placeholder in URL
+ *  Displays the review with id_reviews = * placeholder in URL
  */
 @WebServlet(name = "ViewReview", urlPatterns = { "/reviews/*" })
 public class ViewReview extends HttpServlet {

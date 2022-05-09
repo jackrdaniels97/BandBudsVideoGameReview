@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- *  Contains method for displaying all blog posts
+ *  Displaying all reviews
  */
 @WebServlet(name = "ViewGames", urlPatterns = { "/viewGames" })
 public class ViewGames extends HttpServlet {
@@ -30,7 +30,6 @@ public class ViewGames extends HttpServlet {
         String url = "/viewGames.jsp";
         GenericDao<Review> reviewDao = new GenericDao<>(Review.class);
 
-        // get all posts, reverse the list so newest are displayed first
         List<Review> reviews = reviewDao.getAll();
 
         req.setAttribute("reviews", reviews);

@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Set;
 
 /**
- *  Contains method for updating post with id = * placeholder
+ *  Contains method for updating review with id = * placeholder
  */
 @WebServlet(name = "UpdateReview", urlPatterns = { "/update_review/*" })
 public class UpdateReview extends HttpServlet {

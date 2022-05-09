@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- *  Contains method for displaying custom error page for 404 errors
+ *  Contains method for displaying custom error page for 500 errors
  */
 @WebServlet(name = "ExceptionHandler", urlPatterns = { "/500" })
 public class Exception500Error extends HttpServlet {

@@ -182,27 +182,19 @@ public class Auth extends HttpServlet implements PropertiesLoader {
             logger.error("Algorithm Error " + e.getMessage(), e);
         }
 
-        // get an algorithm instance
         Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) publicKey, null);
 
-        // Verify ISS field of the token to make sure it's from the Cognito source
         String iss = String.format("https://cognito-idp.%s.amazonaws.com/%s", REGION, POOL_ID);
 
         JWTVerifier verifier = JWT.require(algorithm)
                 .withIssuer(iss)
-                .withClaim("token_use", "id") // make sure you're verifying id token
+                .withClaim("token_use", "id")
                 .build();
 
-        // Verify the token
+        // Verify  token
         DecodedJWT jwt = verifier.verify(tokenResponse.getIdToken());
         String username = jwt.getClaim("cognito:username").asString();
-        //String email = jwt.getClaim("email").asString();
         logger.debug("here's the username: " + username);
-        //logger.debug("the email" + email);
-
-        //List<String> userData = new ArrayList<>();
-        //userData.add(username);
-        //userData.add(email);
 
         return username;
     }

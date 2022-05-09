@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- *  Contains method for displaying custom error page for 404 errors
+ *  Contains method for displaying custom error page for gen errors
  */
 @WebServlet(name = "ExceptionHandler", urlPatterns = { "/generror" })
 public class ExceptionGenError extends HttpServlet {

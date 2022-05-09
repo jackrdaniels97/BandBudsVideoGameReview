@@ -30,7 +30,7 @@ public class AddReview extends HttpServlet  {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // get userName and email that from cognito, stored in session
+        // get username from cognito, stored in session
         HttpSession session = req.getSession();
         String userName = (String) session.getAttribute("userName");
 
@@ -41,7 +41,6 @@ public class AddReview extends HttpServlet  {
         newReview.setReview(req.getParameter("review"));
         newReview.setUser(Util.getUser(userName));
 
-        //get id of review and go to that review page
 
         int newReviewID = reviewDao.insert(newReview);
         req.setAttribute("reviewId", newReviewID);
