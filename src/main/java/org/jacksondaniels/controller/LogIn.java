@@ -17,8 +17,8 @@ import java.util.Properties;
 /** Begins the authentication process using AWS Cognito
  *
  */
-@WebServlet(urlPatterns = {"/logIn"})
 public class LogIn extends HttpServlet implements PropertiesLoader {
+    Properties properties;
     private final Logger logger = LogManager.getLogger(this.getClass());
     public static String CLIENT_ID;
     public static String LOGIN_URL;
@@ -27,36 +27,44 @@ public class LogIn extends HttpServlet implements PropertiesLoader {
     @Override
     public void init() throws ServletException {
         super.init();
-        getPropsFromServletContext();
+        loadProperties();
     }
 
     /**
-     * Fetches all the cognito properties that were stored in the application context in the ApplicationStartup class.
+     * Read in the cognito props file and get the client id and required urls
+     * for authenticating a user.
      */
-    private void getPropsFromServletContext() {
-        Properties cognitoProps = (Properties) getServletContext().getAttribute("cognitoProps");
-        CLIENT_ID = cognitoProps.getProperty("client.id");
-        LOGIN_URL = cognitoProps.getProperty("loginURL");
-        REDIRECT_URL = cognitoProps.getProperty("redirectURL");
-
+    // TODO This code appears in a couple classes, consider using a startup servlet similar to adv java project
+    // 4 to do this work a single time and put the properties in the application scope
+    private void loadProperties() {
+        try {
+            properties = loadProperties("/cognito.properties");
+            CLIENT_ID = properties.getProperty("client.id");
+            LOGIN_URL = properties.getProperty("loginURL");
+            REDIRECT_URL = properties.getProperty("redirectURL");
+        } catch (IOException ioException) {
+            logger.error("Cannot load properties..." + ioException.getMessage(), ioException);
+        } catch (Exception e) {
+            logger.error("Error loading properties" + e.getMessage(), e);
+        }
     }
 
     /**
      * Route to the aws-hosted cognito login page.
-     *
      * @param req servlet request
      * @param resp servlet response
-     * @throws ServletException general servlet issues
-     * @throws IOException exceptions involving IO
+     * @throws ServletException
+     * @throws IOException
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // TODO if properties weren't loaded properly, route to an error page
         try {
             String url = LOGIN_URL + "?response_type=code&client_id=" + CLIENT_ID + "&redirect_uri=" + REDIRECT_URL;
             resp.sendRedirect(url);
         } catch (Exception e) {
-            logger.error("Error loading cognito properties " + e.getMessage(), e);
-            resp.sendRedirect("/error");
+            logger.error("Error loading properties" + e.getMessage(), e);
+            resp.sendRedirect("/error.jsp");
         }
     }
 }
