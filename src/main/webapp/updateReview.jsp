@@ -24,16 +24,15 @@
                 <input type="text" class="form-control" id="title" value="${review.title}">
             </div>
             <div class="form-group">
-                <label for="review">Review</label>
+                <label for="review">Review:</label>
                 <input type="text" class="form-control" id="review" value="${review.review}">
             </div>
+            <br /><br />
             <button type="submit" class="btn btn-primary">Save update</button>
-            <a href="/reviews/${review.id_reviews}" class="btn btn-danger">Cancel update</a>
+            <a href="<%=request.getContextPath()%>/reviews/${review.id_reviews}" class="btn btn-danger">Cancel update</a>
         </form>
         <br />
         <br />
-
-        <img src="images/gamer.png" alt="One Does not Simply" class="center">
 
     </main>
 

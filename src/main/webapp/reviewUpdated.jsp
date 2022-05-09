@@ -27,8 +27,6 @@
         <br />
         <br />
 
-        <img src="images/gamer.png" alt="One Does not Simply" class="center">
-
     </main>
 
     <div id="clear"></div>
