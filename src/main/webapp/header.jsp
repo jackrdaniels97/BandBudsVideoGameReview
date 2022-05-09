@@ -18,7 +18,7 @@
                     <c:choose>
                         <c:when test="${username == null}">
                             <li>
-                                <a href="nav-link" href="/logIn">Login</a>
+                                <a href="nav-link" href="<%=request.getContextPath()%>/logIn">Login</a>
                             </li>
                         </c:when>
                         <c:otherwise>
