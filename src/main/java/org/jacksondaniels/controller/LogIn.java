@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.Properties;
 
 
+@WebServlet(urlPatterns = {"/logIn"})
+
+
 
 /** Begins the authentication process using AWS Cognito
  *
