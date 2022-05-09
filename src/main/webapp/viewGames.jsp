@@ -20,16 +20,6 @@
         </h1>
         <br />
 
-        <section class="border rounded bg-secondary text-light p-3 text-center">
-            <p>We are a group of high school band buddies posting our reviews of video games.
-                This site is to help us find new games to play that one of the others has played already.
-            </p>
-        </section>
-        <br />
-        <br />
-
-        <img src="images/gamer.png" alt="One Does not Simply" class="center img-fluid" />
-
         <br />
         <c:forEach var="review" items="${reviews}">
             <table class="table table-striped border w-75 mx-auto">
@@ -59,6 +49,9 @@
         </c:forEach>
         <div id="clear"></div>
     </div>
+
+        <img src="images/gamer.png" alt="One Does not Simply" class="center img-fluid" />
+
     <div id="main_content_bottom"></div>
     </main>
 <jsp:include page="footer.jsp" />
