@@ -18,7 +18,7 @@
             Band Buds Video Game Reviews
         </h1>
         <br />
-            <form method="POST" action="/add_review">
+            <form method="POST" action="<%=request.getContextPath()%>/add_review">
                 <div class="form-group">
                     <label for="title">Title of Game:</label>
                     <input type="text" class="form-control" id="title" placeholder="The Witcher 3">

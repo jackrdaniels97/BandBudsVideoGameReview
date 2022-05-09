@@ -18,7 +18,7 @@
             Update Review
         </h1>
         <br />
-        <form method="POST" action="/update_review/${review.id}">
+        <form method="POST" action="<%=request.getContextPath()%>/update_review/${review.id}">
             <div class="form-group">
                 <label for="title">Title of Game:</label>
                 <input type="text" class="form-control" id="title" value="${review.title}">
