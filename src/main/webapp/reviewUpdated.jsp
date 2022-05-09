@@ -21,7 +21,7 @@
         <br />
 
         <section class="border rounded bg-secondary text-light p-3 text-center">
-            Thank you for updating the post! <br /><br />
+            Thank you for updating the review for ${review.title}! <br /><br />
             <h2><a href="<%=request.getContextPath()%>/reviews/${review.id_reviews}" class="btn btn-dark">Here is the updated Review</a></h2>
         </section>
         <br />
