@@ -1,14 +1,13 @@
 package org.jacksondaniels.controller;
 
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.commons.io.*;
 import org.jacksondaniels.auth.*;
 import org.jacksondaniels.entity.User;
 import org.jacksondaniels.persistence.GenericDao;
@@ -19,7 +18,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URI;
 import java.net.URL;
@@ -34,19 +35,16 @@ import java.security.PublicKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPublicKeySpec;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
-import javax.servlet.http.HttpSession;
-import java.util.Base64;
 
-
-@WebServlet(
-        urlPatterns = {"/auth"}
-)
 /**
- * Inspired by: https://stackoverflow.com/questions/52144721/how-to-get-access-token-using-client-credentials-using-java-code
+ *  Handles user authentication and login
  */
-
+@WebServlet(urlPatterns = {"/auth"})
+// TODO if something goes wrong it this process, route to an error page. Currently, errors are only caught and logged.
+/* Inspired by: https://stackoverflow.com/questions/52144721/how-to-get-access-token-using-client-credentials-using-java-code */
 public class Auth extends HttpServlet implements PropertiesLoader {
     Properties properties;
     String CLIENT_ID;
@@ -57,10 +55,15 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     String REGION;
     String POOL_ID;
     Keys jwks;
-    GenericDao<User> dao = new GenericDao<>(User.class);
+    GenericDao<User> userDao = new GenericDao<>(User.class);
 
     private final Logger logger = LogManager.getLogger(this.getClass());
 
+    /**
+     * Initializes servlet, loads cognito properties and key
+     *
+     * @throws ServletException if an input or output error is detected when handling GET req
+     */
     @Override
     public void init() throws ServletException {
         super.init();
@@ -99,29 +102,40 @@ public class Auth extends HttpServlet implements PropertiesLoader {
                 } else {
                     logger.info("User " + username + "doesn't exist");
                     User newUser = new User(username);
-                    dao.insert(newUser);
+                    userDao.insert(newUser);
                     session.setAttribute("user", newUser);
                     req.getRequestDispatcher("/editProfile").forward(req, resp);
                 }
 
             } catch (IOException e) {
                 logger.error("Error getting or validating the token: " + e.getMessage(), e);
-                resp.sendRedirect("error.jsp");
+                resp.sendRedirect("/generror.jsp");
             } catch (InterruptedException e) {
                 logger.error("Error getting token from Cognito oauth url " + e.getMessage(), e);
-                resp.sendRedirect("error.jsp");
+                resp.sendRedirect("/generror.jsp");
             }
         }
-        req.getRequestDispatcher("index.jsp").forward(req, resp);
+        req.getRequestDispatcher("/index.jsp").forward(req, resp);
     }
 
+
+    /**
+     * Checks if user exists
+     * @param username
+     * @return
+     */
     public boolean userExists(String username) {
-        List<User> users = dao.findByPropertyEqual("username", username);
+        List<User> users = userDao.findByPropertyEqual("username", username);
         return (users.size() == 1);
     }
 
+    /**
+     * getting the user
+     * @param username
+     * @return
+     */
     public User getUser(String username) {
-        List<User> users = dao.findByPropertyEqual("username", username);
+        List<User> users = userDao.findByPropertyEqual("username", username);
         return users.get(0);
     }
 
@@ -166,12 +180,10 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         String keyId = tokenHeader.getKid();
         String alg = tokenHeader.getAlg();
 
-        // todo pick proper key from the two - it just so happens that the first one works for my case
         // Use Key's N and E
         BigInteger modulus = new BigInteger(1, org.apache.commons.codec.binary.Base64.decodeBase64(jwks.getKeys().get(0).getN()));
         BigInteger exponent = new BigInteger(1, org.apache.commons.codec.binary.Base64.decodeBase64(jwks.getKeys().get(0).getE()));
 
-        // TODO the following is "happy path", what if the exceptions are caught?
         // Create a public key
         PublicKey publicKey = null;
         try {
@@ -182,18 +194,21 @@ public class Auth extends HttpServlet implements PropertiesLoader {
             logger.error("Algorithm Error " + e.getMessage(), e);
         }
 
+        // get an algorithm instance
         Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) publicKey, null);
 
+        // Verify ISS field of the token to make sure it's from the Cognito source
         String iss = String.format("https://cognito-idp.%s.amazonaws.com/%s", REGION, POOL_ID);
 
         JWTVerifier verifier = JWT.require(algorithm)
                 .withIssuer(iss)
-                .withClaim("token_use", "id")
+                .withClaim("token_use", "id") // make sure you're verifying id token
                 .build();
 
-        // Verify  token
+        // Verify the token
         DecodedJWT jwt = verifier.verify(tokenResponse.getIdToken());
         String username = jwt.getClaim("cognito:username").asString();
+
         logger.debug("here's the username: " + username);
 
         return username;
