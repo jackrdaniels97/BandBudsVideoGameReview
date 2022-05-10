@@ -30,7 +30,7 @@
             </tr>
             </tbody>
 
-            <c:if test="${review.user.id == 1}">
+            <c:if test="${userId == review.user.id}">
                 <tfoot>
                     <tr>
                         <td>

@@ -40,7 +40,40 @@
             </form>
         </c:otherwise>
     </c:choose>
-    <c:out value="${users}"/>
+
+    <c:forEach var="review" items="${reviews}">
+    <table class="table table-striped border">
+        <thead>
+        <tr>
+            <th>Title: ${review.title}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Review: ${review.review}</td>
+        </tr>
+        <tr>
+            <td>Reviewer: ${review.user.firstName} ${review.user.lastName}</td>
+        </tr>
+        </tbody>
+
+
+        <tfoot>
+        <tr>
+            <td>
+                <a href="<%=request.getContextPath()%>/editReview/${review.id_reviews}" class="btn btn-secondary">Edit Review</a>
+            </td>
+            <td>
+                <a type="button"
+                   class="btn btn-danger"
+                   href="<%=request.getContextPath()%>/delete_review/${review.id_reviews}"
+                   onclick="return confirm('Are you sure you want to delete this item? This CANNOT be undone.');">Delete</a>
+            </td>
+        </tr>
+        </tfoot>
+        </table>
+        </c:forEach>
+
     </main>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

@@ -12,13 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.List;
 
 /**
  *  Contains method for updating user
  */
-@WebServlet(urlPatterns = {"/updateUser"})
-public class UpdateUser extends HttpServlet {
+@WebServlet(urlPatterns = {"/updateProfile"})
+public class UpdateProfile extends HttpServlet {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
 
