@@ -38,6 +38,15 @@ public class User {
     }
 
     /**
+     * Instantiates a new User.
+     *
+     * @param username the username
+     */
+    public User(String username) {
+        this.username = username;
+    }
+
+    /**
      * Instantiates a new user
      *
      * @param firstName user first name
@@ -53,15 +62,6 @@ public class User {
         this.id = id;
         this.username = username;
 
-    }
-
-    public User(String username) {
-        this.username = username;
-    }
-
-    public User(String username, String email) {
-        this.username = username;
-        this.email = email;
     }
 
 
