@@ -15,6 +15,12 @@
 
     <main class="w-75 m-auto">
 
+        <br />
+        <h1 class="text-center align-self-center">
+            Band Buds Video Game Reviews
+        </h1>
+        <br />
+
         <table class="table table-striped border">
             <thead>
             <tr>
