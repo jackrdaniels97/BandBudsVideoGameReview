@@ -27,15 +27,14 @@ public class ViewProfile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        GenericDao<User> userDao = new GenericDao<>(User.class);
         GenericDao<Review> reviewDao = new GenericDao<>(Review.class);
-        List<User> users = userDao.getByUser();
+        User users = (User) req.getSession().getAttribute("user");
 
 
         List<Review> userReviews = reviewDao.getByUser(users);
         req.setAttribute("reviews", userReviews);
-
-        req.setAttribute("users", users);
+//
+//        req.setAttribute("users", users);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/profile.jsp");
         dispatcher.forward(req, resp);
     }
