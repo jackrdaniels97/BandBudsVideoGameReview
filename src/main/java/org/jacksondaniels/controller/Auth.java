@@ -43,7 +43,6 @@ import java.util.stream.Collectors;
  *  Handles user authentication and login
  */
 @WebServlet(urlPatterns = {"/auth"})
-// TODO if something goes wrong it this process, route to an error page. Currently, errors are only caught and logged.
 /* Inspired by: https://stackoverflow.com/questions/52144721/how-to-get-access-token-using-client-credentials-using-java-code */
 public class Auth extends HttpServlet implements PropertiesLoader {
     Properties properties;
@@ -90,18 +89,18 @@ public class Auth extends HttpServlet implements PropertiesLoader {
             HttpRequest authRequest = buildAuthRequest(authCode);
             try {
                 TokenResponse tokenResponse = getToken(authRequest);
-                String username = validate(tokenResponse);
+                String userName = validate(tokenResponse);
 
-                session.setAttribute("username", username);
+                session.setAttribute("username", userName);
 
-                if (userExists(username)) {
-                    logger.info("User " + username + "exists");
-                    User user = getUser(username);
+                if (userExists(userName)) {
+                    logger.info("User " + userName + "exists");
+                    User user = getUser(userName);
                     session.setAttribute("user", user);
-                    req.getRequestDispatcher("index.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/index.jsp").forward(req, resp);
                 } else {
-                    logger.info("User " + username + "doesn't exist");
-                    User newUser = new User(username);
+                    logger.info("User " + userName + "doesn't exist");
+                    User newUser = new User(userName);
                     userDao.insert(newUser);
                     session.setAttribute("user", newUser);
                     req.getRequestDispatcher("/editProfile").forward(req, resp);

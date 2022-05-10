@@ -26,7 +26,7 @@ public class ReviewDAOTest {
     @BeforeEach
     void setUp() {
 
-        logger.info("Starting new post test");
+        logger.info("Starting new review test");
         reviewDao = new GenericDao<>(Review.class);
         userDao = new GenericDao<>(User.class);
 
@@ -59,7 +59,7 @@ public class ReviewDAOTest {
     }
 
     /**
-     * Verifies getting single post
+     * Verifies getting single review
      */
     @Test
     public void getReviewByIdSuccess() {

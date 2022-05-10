@@ -12,11 +12,11 @@ public class Util {
     /**
      * Returns the id in url
      *
-     * @param pathInfo the url path info containing a user or post id
+     * @param pathInfo the url path info containing a user or review id
      * @return just the id part of path
      */
     public static int getId(String pathInfo) {
-        // grab everything after slash in url, should be the post, user or tag id
+        // grab everything  in url
         return Integer.parseInt(pathInfo.substring(1));
     }
 

@@ -146,10 +146,10 @@ public class GenericDao<T> {
     }
 
     /**
-     * Returns all database entries associated with user (ie posts)
+     * Returns all database entries associated with user (ie reviews)
      *
      * @param user the user
-     * @return list of user's posts
+     * @return list of user's reviews
      */
     public List<T> getByUser(User user) {
         Session session = getSession();
