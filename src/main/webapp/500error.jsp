@@ -10,11 +10,11 @@
 <jsp:include page="header.jsp" />
 
 <div id="main_content_top"></div>
-<div id="main_content">
+<div id="main_content center">
     <h1>500 Internal Error</h1>
-    <p>Hello there! Sadly General Grievous was here broke something :( </p>
+    <p>Hello there! Sadly General Grievous was here and broke something :( </p>
 
-
+    <img src="images/generalGrevious.png" alt="One Does not Simply" class="center img-fluid">
     <div id="clear"></div>
 </div>
 <div id="main_content_bottom"></div>

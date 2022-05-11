@@ -10,10 +10,12 @@
 <jsp:include page="header.jsp" />
 
 <div id="main_content_top"></div>
-<div id="main_content">
+<div id="main_content center">
     <h1>404 Error</h1>
     <p>Hello there! Sadly General Grievous was here and we can not find this page:( </p>
 
+
+    <img src="images/generalGrevious.png" alt="One Does not Simply" class="center img-fluid">
 
     <div id="clear"></div>
 </div>

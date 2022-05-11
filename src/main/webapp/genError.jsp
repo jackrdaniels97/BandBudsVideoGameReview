@@ -10,10 +10,12 @@
 <jsp:include page="header.jsp" />
 
 <div id="main_content_top"></div>
-<div id="main_content">
+<div id="main_content center">
     <h1>Something went wrong :(</h1>
     <p>Hello There!Sadly General Grievous was here broke something :(</p>
 
+
+    <img src="images/generalGrevious.png" alt="One Does not Simply" class="center img-fluid">
 
     <div id="clear"></div>
 </div>
