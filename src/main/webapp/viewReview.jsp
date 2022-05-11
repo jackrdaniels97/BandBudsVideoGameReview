@@ -35,22 +35,20 @@
                 <td>Reviewer: ${review.user.firstName} ${review.user.lastName}</td>
             </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td>
+                        <a href="<%=request.getContextPath()%>/editReview/${review.id_reviews}" class="btn btn-secondary">Edit Review</a>
+                    </td>
+                    <td>
+                        <a type="button"
+                            class="btn btn-danger"
+                            href="<%=request.getContextPath()%>/delete_review/${review.id_reviews}"
+                            onclick="return confirm('Are you sure you want to delete this item? This CANNOT be undone.');">Delete</a>
+                    </td>
+                </tr>
+            </tfoot>
 
-            <c:if test="${userId == review.user.id}">
-                <tfoot>
-                    <tr>
-                        <td>
-                            <a href="<%=request.getContextPath()%>/editReview/${review.id_reviews}" class="btn btn-secondary">Edit Review</a>
-                        </td>
-                        <td>
-                            <a type="button"
-                                class="btn btn-danger"
-                                href="<%=request.getContextPath()%>/delete_review/${review.id_reviews}"
-                                onclick="return confirm('Are you sure you want to delete this item? This CANNOT be undone.');">Delete</a>
-                        </td>
-                    </tr>
-                </tfoot>
-            </c:if>
         </table>
 
 

@@ -27,6 +27,10 @@
                     <label for="review">What did you think about this game?</label>
                     <input type="text" class="form-control" id="review" placeholder="It was great!">
                 </div>
+                <div class="form-group">
+                    <label for="userName">User name:</label>
+                    <input type="text" class="form-control" id="userName" placeholder="It was great!">
+                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         <br />

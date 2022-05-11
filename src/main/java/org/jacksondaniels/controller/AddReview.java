@@ -32,9 +32,10 @@ public class AddReview extends HttpServlet  {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // get userName from cognito, stored in session
         HttpSession session = req.getSession();
-        String userName = (String) session.getAttribute("userName");
 
         GenericDao<Review> reviewDao = new GenericDao<>(Review.class);
+
+        String userName = req.getParameter("userName");
 
         Review newReview = new Review();
         newReview.setTitle(req.getParameter("title"));
