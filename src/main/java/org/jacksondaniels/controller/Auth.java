@@ -81,6 +81,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         String authCode = req.getParameter("code");
         HttpSession session = req.getSession();
 
+        List<String> userInfo;
 
         if (authCode == null) {
             resp.sendRedirect("/error.jsp");
@@ -88,9 +89,13 @@ public class Auth extends HttpServlet implements PropertiesLoader {
             HttpRequest authRequest = buildAuthRequest(authCode);
             try {
                 TokenResponse tokenResponse = getToken(authRequest);
-                String userName = validate(tokenResponse);
+//                String userName = validate(tokenResponse);
+                userInfo = validate(tokenResponse);
+                String userName = userInfo.get(0);
+                String email = userInfo.get(1);
 
                 session.setAttribute("userName", userName);
+                session.setAttribute("email", email);
 
                 if (userExists(userName)) {
                     logger.info("User " + userName + "exists");
@@ -169,13 +174,13 @@ public class Auth extends HttpServlet implements PropertiesLoader {
      * @return
      * @throws IOException
      */
-    private String validate(TokenResponse tokenResponse) throws IOException {
+    private List<String> validate(TokenResponse tokenResponse) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         CognitoTokenHeader tokenHeader = mapper.readValue(CognitoJWTParser.getHeader(tokenResponse.getIdToken()).toString(), CognitoTokenHeader.class);
 
-        logger.info("tokenResponse: " + tokenResponse);
-        logger.info("mapper: " + mapper);
-        logger.info("tokenHeader: " + tokenHeader);
+        log("tokenResponse: " + tokenResponse);
+        log("mapper: " + mapper);
+        log("tokenHeader: " + tokenHeader);
 
         // Header should have kid and alg- https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-the-id-token.html
         String keyId = tokenHeader.getKid();
@@ -185,8 +190,8 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         BigInteger modulus = new BigInteger(1, org.apache.commons.codec.binary.Base64.decodeBase64(jwks.getKeys().get(0).getN()));
         BigInteger exponent = new BigInteger(1, org.apache.commons.codec.binary.Base64.decodeBase64(jwks.getKeys().get(0).getE()));
 
-        logger.info("modulus : " + modulus);
-        logger.info("exponent :" + exponent);
+        log("modulus : " + modulus);
+        log("exponent :" + exponent);
 
         // Create a public key
         PublicKey publicKey = null;
@@ -212,10 +217,14 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         // Verify the token
         DecodedJWT jwt = verifier.verify(tokenResponse.getIdToken());
         String userName = jwt.getClaim("cognito:userName").asString();
-
+        String email = jwt.getClaim("email").asString();
         logger.debug("here's the userName: " + userName);
 
-        return userName;
+        List<String> userInfo = new ArrayList<>();
+        userInfo.add(userName);
+        userInfo.add(email);
+
+        return userInfo;
     }
 
     /** Create the auth url and use it to build the request.
