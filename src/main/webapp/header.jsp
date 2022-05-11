@@ -16,14 +16,14 @@
                         <a class="nav-link" href="<%=request.getContextPath()%>/viewGames">View Reviews</a>
                     </li>
                     <c:choose>
-                        <c:when test="${username == null}">
+                        <c:when test="${userName == null}">
                             <li>
                                 <a class="nav-link" href="<%=request.getContextPath()%>/logIn">Login</a>
                             </li>
                         </c:when>
                         <c:otherwise>
                         <li class="nav-item">
-                            <a class="nav-link" href="<%=request.getContextPath()%>/viewProfile">${username}</a>
+                            <a class="nav-link" href="<%=request.getContextPath()%>/viewProfile">${userName}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<%=request.getContextPath()%>/addReview.jsp">Add Review</a>

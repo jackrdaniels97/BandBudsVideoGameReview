@@ -90,7 +90,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
                 TokenResponse tokenResponse = getToken(authRequest);
                 String userName = validate(tokenResponse);
 
-                session.setAttribute("username", userName);
+                session.setAttribute("userName", userName);
 
                 if (userExists(userName)) {
                     logger.info("User " + userName + "exists");
@@ -119,21 +119,21 @@ public class Auth extends HttpServlet implements PropertiesLoader {
 
     /**
      * Checks if user exists
-     * @param username
+     * @param userName
      * @return
      */
-    public boolean userExists(String username) {
-        List<User> users = userDao.findByPropertyEqual("username", username);
+    public boolean userExists(String userName) {
+        List<User> users = userDao.findByPropertyEqual("userName", userName);
         return (users.size() == 1);
     }
 
     /**
      * getting the user
-     * @param username
+     * @param userName
      * @return
      */
-    public User getUser(String username) {
-        List<User> users = userDao.findByPropertyEqual("username", username);
+    public User getUser(String userName) {
+        List<User> users = userDao.findByPropertyEqual("userName", userName);
         return users.get(0);
     }
 
@@ -164,7 +164,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
 
     /**
      * Get values out of the header to verify the token is legit. If it is legit, get the claims from it, such
-     * as username.
+     * as userName.
      * @param tokenResponse
      * @return
      * @throws IOException
@@ -205,11 +205,11 @@ public class Auth extends HttpServlet implements PropertiesLoader {
 
         // Verify the token
         DecodedJWT jwt = verifier.verify(tokenResponse.getIdToken());
-        String username = jwt.getClaim("cognito:username").asString();
+        String userName = jwt.getClaim("cognito:userName").asString();
 
-        logger.debug("here's the username: " + username);
+        logger.debug("here's the userName: " + userName);
 
-        return username;
+        return userName;
     }
 
     /** Create the auth url and use it to build the request.

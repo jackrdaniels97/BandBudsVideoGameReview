@@ -28,8 +28,8 @@ public class User {
     private String email;
 
 
-    @Column(name = "username")
-    private String username;
+    @Column(name = "userName")
+    private String userName;
 
     /**
      * Instantiates a new User
@@ -40,10 +40,10 @@ public class User {
     /**
      * Instantiates a new User.
      *
-     * @param username the username
+     * @param userName the userName
      */
-    public User(String username) {
-        this.username = username;
+    public User(String userName) {
+        this.userName = userName;
     }
 
     /**
@@ -53,14 +53,14 @@ public class User {
      * @param lastName  user last name
      * @param email     user email
      * @param id        user id
-     * @param username  the username
+     * @param userName  the userName
      */
-    public User(String firstName, String lastName, String email, int id, String username) {
+    public User(String firstName, String lastName, String email, int id, String userName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.id = id;
-        this.username = username;
+        this.userName = userName;
 
     }
 
@@ -138,21 +138,21 @@ public class User {
     }
 
     /**
-     * Gets username.
+     * Gets userName.
      *
-     * @return the username
+     * @return the userName
      */
     public String getUsername() {
-        return username;
+        return userName;
     }
 
     /**
-     * Sets username.
+     * Sets userName.
      *
-     * @param username the username
+     * @param userName the userName
      */
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String userName) {
+        this.userName = userName;
     }
 
     @Override
@@ -162,7 +162,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", id=" + id + '\'' +
-                ", username=" + username +
+                ", userName=" + userName +
                 '}';
     }
 }

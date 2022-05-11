@@ -89,7 +89,7 @@ public class Database {
         }
 
         String url = properties.getProperty("url");
-        connection = DriverManager.getConnection(url, properties.getProperty("username"),  properties.getProperty("password"));
+        connection = DriverManager.getConnection(url, properties.getProperty("userName"),  properties.getProperty("password"));
     }
 
     /**

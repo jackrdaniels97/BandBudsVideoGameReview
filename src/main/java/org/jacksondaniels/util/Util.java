@@ -21,14 +21,14 @@ public class Util {
     }
 
     /**
-     * Returns a user object when passed a username string
+     * Returns a user object when passed a userName string
      *
-     * @param username a user's username
-     * @return the User object associated with that username
+     * @param userName a user's userName
+     * @return the User object associated with that userName
      */
-    public static User getUser(String username) {
+    public static User getUser(String userName) {
         GenericDao<User> userDao = new GenericDao<>(User.class);
-        List<User> users = userDao.findByPropertyEqual("username", username);
+        List<User> users = userDao.findByPropertyEqual("userName", userName);
         return users.get(0);
     }
 
