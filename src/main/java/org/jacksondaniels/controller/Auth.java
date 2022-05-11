@@ -96,7 +96,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
                     logger.info("User " + userName + "exists");
                     User user = getUser(userName);
                     session.setAttribute("user", user);
-                    req.getRequestDispatcher("/index.jsp").forward(req, resp);
+                    req.getRequestDispatcher("index.jsp").forward(req, resp);
                 } else {
                     logger.info("User " + userName + "doesn't exist");
                     User newUser = new User(userName);
@@ -172,7 +172,10 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     private String validate(TokenResponse tokenResponse) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         CognitoTokenHeader tokenHeader = mapper.readValue(CognitoJWTParser.getHeader(tokenResponse.getIdToken()).toString(), CognitoTokenHeader.class);
-        //CognitoIdToken idToken = mapper.readValue(CognitoJWTParser.getPayload(tokenResponse.getIdToken()).toString(), CognitoIdToken.class);
+
+        logger.info("tokenResponse: " + tokenResponse);
+        logger.info("mapper: " + mapper);
+        logger.info("tokenHeader: " + tokenHeader);
 
         // Header should have kid and alg- https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-the-id-token.html
         String keyId = tokenHeader.getKid();
@@ -181,6 +184,9 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         // Use Key's N and E
         BigInteger modulus = new BigInteger(1, org.apache.commons.codec.binary.Base64.decodeBase64(jwks.getKeys().get(0).getN()));
         BigInteger exponent = new BigInteger(1, org.apache.commons.codec.binary.Base64.decodeBase64(jwks.getKeys().get(0).getE()));
+
+        logger.info("modulus : " + modulus);
+        logger.info("exponent :" + exponent);
 
         // Create a public key
         PublicKey publicKey = null;
